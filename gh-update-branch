@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+declare number=${1:-$(gh pr view --json number --jq '.number')}
+declare sha=$(gh pr view ${number} --json commits --jq '.commits[-1].oid')
+
+exec gh api --silent "repos/{owner}/{repo}/pulls/${number}/update-branch" \
+  --field expected_head_sha=${sha} \
+  --method PUT \
+  --preview lydian
