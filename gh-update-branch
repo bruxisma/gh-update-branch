@@ -1,8 +1,7 @@
 #!/bin/bash
 set -e
 
-declare number=${1:-$(gh pr view --json number --jq '.number')}
-declare sha=$(gh pr view ${number} --json commits --jq '.commits[-1].oid')
+read -r number sha < <(gh pr view ${1} --json number,commits --jq '[.number,.commits[-1].oid]|@tsv')
 
 exec gh api --silent "repos/{owner}/{repo}/pulls/${number}/update-branch" \
   --field expected_head_sha=${sha} \
