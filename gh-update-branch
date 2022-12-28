@@ -5,5 +5,4 @@ read -r number sha < <(gh pr view ${1} --json number,commits --jq '[.number,.com
 
 exec gh api --silent "repos/{owner}/{repo}/pulls/${number}/update-branch" \
   --field expected_head_sha=${sha} \
-  --method PUT \
-  --preview lydian
+  --method PUT
