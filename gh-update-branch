@@ -4,7 +4,7 @@ set -e
 if [ -z "$1" ]; then
   prs=$(gh pr view --jq '.[].number' --json number)
   echo "Updating current PR"
-elif [ $1 == "--all" ]; then
+elif [ $1 == "--mine" ]; then
   prs=$(gh pr list --author @me --jq '.[].number' --json number)
   echo "Updating all your PRs"
 else
